@@ -8,7 +8,7 @@
             </div>
         </c:if>
         <h2>従業員　一覧</h2>
-        <table>
+        <table id="employee_list">
             <tbody>
                 <tr>
                     <th>社員番号</th>
@@ -22,30 +22,32 @@
                         <td>
                             <c:choose>
                                 <c:when test="${employee.delete_flag == 1}">
-                                    (削除済み)
+                                    （削除済み）
                                 </c:when>
+                                <c:otherwise>
+                                    <a href="<c:url value='/employees/show?id=${employee.id}' />">詳細を表示</a>
+                                </c:otherwise>
                             </c:choose>
-                            <c:otherwise>
-                                <a href="<c:url value='/employees/show?id=${employee.id}' />">詳細を表示</a>
-                            </c:otherwise>
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
+
         <div id="pagination">
-            (全 ${employees_count} 件)<br>
-            <c:forEach var="i" begin="1" end="${((employees_count -1) / 15) + 1}" step="1">
+            （全 ${employees_count} 件）<br />
+            <c:forEach var="i" begin="1" end="${((employees_count - 1) / 15) + 1}" step="1">
                 <c:choose>
                     <c:when test="${i == page}">
                         <c:out value="${i}" />&nbsp;
                     </c:when>
+                    <c:otherwise>
+                        <a href="<c:url value='/employees/index?page=${i}' />"><c:out value="${i}" /></a>&nbsp;
+                    </c:otherwise>
                 </c:choose>
-                <c:otherwise>
-                    <a href="<c:url value='/employees/index?page=${i}' />"><c:out value="${i}" /></a>&nbsp;
-                </c:otherwise>
             </c:forEach>
         </div>
-        <p><a href="<c:url value='/employees/new/' />">新規従業員の登録</a></p>
+        <p><a href="<c:url value='/employees/new' />">新規従業員の登録</a></p>
+
     </c:param>
 </c:import>
